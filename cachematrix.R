@@ -1,18 +1,24 @@
 ## Programming Assignment 2 of the R Programming course on Coursera
 ## https://class.coursera.org/rprog-009/
 
-## makekCacheMatrix creates a setter/getter object that stores a matrix
+## makekCacheMatrix creates a setter/getter object that stores a matrix object
 
 makeCacheMatrix <- function(x = matrix(),...) {
-  print(environment())
+  
   i <- NULL
-  set <- function(y) {
-    x <<- y
-    i <<- NULL
-  }
-  get <- function() x
-  setinverse <- function(inverse) i <<- inverse
+  
+  # x is the matrix object. When 'get' is called, simply return x
+  get <- function() x  
+  
+  # "setinverse" is used to save a value (the inverse of the matrix) in "i"
+  # i is the object that stores the inverse passed
+  setinverse <- function(inverse) i <<- inverse 
+  
+  # "getinverse" returns the content of "i", ideally the inverse of matrix x was stored in it.
   getinverse <- function() i
+  
+  # Return the follow list when makeCacheMatrix is called
+  # These are setter/getter methods that this function supports
   list(set = set, get = get,
        setinverse = setinverse,
        getinverse = getinverse)
@@ -27,17 +33,25 @@ makeCacheMatrix <- function(x = matrix(),...) {
 ##
 
 cacheSolve <- function(x, ...) {
-        ## Return a matrix that is the inverse of 'x'
   
+  #Assume that x is a matrix created using makeCacheMatrix
+  # Try reading the inverse of the matrix stored in x, if available
   i <- x$getinverse()
+  
+  # if i exists, that's the cached value. Return it!
   if(!is.null(i)) {
     message("getting cached data")
     return(i)
   }
   
+  # if i doesn't exists, compute the inverse of the matrix 
   data <- x$get()
   i <- solve(data, ...)
+  
+  # Save the computed inverse inside the makeCacheMatrix object 
   x$setinverse(i)
+  
+  # Return the inverse
   i
   
 }
@@ -49,4 +63,4 @@ cacheSolve <- function(x, ...) {
 #temp <- matrix(rpois(myDimensions*myDimensions,5), nrow=myDimensions, ncol=myDimensions)
 #myMat <- makeCacheMatrix(temp)
 #cacheSolve(myMat)
-#zapsmall(temp %*% cacheSolve(myMat))
+#m <- zapsmall(temp %*% cacheSolve(myMat))
