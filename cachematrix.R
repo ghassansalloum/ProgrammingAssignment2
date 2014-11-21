@@ -19,7 +19,7 @@ makeCacheMatrix <- function(x = matrix(),...) {
   
   # Return the follow list when makeCacheMatrix is called
   # These are setter/getter methods that this function supports
-  list(get = get,
+  list(get = get, 
        setinverse = setinverse,
        getinverse = getinverse)
   
