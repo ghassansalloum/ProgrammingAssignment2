@@ -19,7 +19,7 @@ makeCacheMatrix <- function(x = matrix(),...) {
   
   # Return the follow list when makeCacheMatrix is called
   # These are setter/getter methods that this function supports
-  list(set = set, get = get,
+  list(get = get,
        setinverse = setinverse,
        getinverse = getinverse)
   
@@ -59,8 +59,9 @@ cacheSolve <- function(x, ...) {
 ## a test program to demonstrate that the returned inverse is indeed the inverse of the input matrix
 ## I multiply both matrices and visually inspect that the result is an identity matrix
 
-#myDimensions <- 1000
-#temp <- matrix(rpois(myDimensions*myDimensions,5), nrow=myDimensions, ncol=myDimensions)
-#myMat <- makeCacheMatrix(temp)
+myDimensions <- 10
+temp <- matrix(rpois(myDimensions*myDimensions,5), nrow=myDimensions, ncol=myDimensions)
+myMat <- makeCacheMatrix(temp)
 #cacheSolve(myMat)
-#m <- zapsmall(temp %*% cacheSolve(myMat))
+m <- zapsmall(temp %*% cacheSolve(myMat))
+m
